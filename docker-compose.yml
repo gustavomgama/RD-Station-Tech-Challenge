@@ -36,6 +36,10 @@ services:
     environment:
       DATABASE_URL: postgresql://postgres:password@db:5432/store_development
       REDIS_URL: redis://redis:6379/0
+    develop:
+      watch:
+        - action: rebuild
+          path: .
 
   test:
     build: .
