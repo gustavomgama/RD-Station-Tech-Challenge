@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_03_224425) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_04_064632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +28,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_03_224425) do
     t.decimal "total_price", precision: 17, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "abandoned", default: false, null: false
+    t.index ["abandoned", "updated_at"], name: "index_carts_on_abandoned_and_updated_at"
+    t.index ["abandoned"], name: "index_carts_on_abandoned"
   end
 
   create_table "products", force: :cascade do |t|
