@@ -48,6 +48,7 @@ services:
       redis:
         condition: service_healthy
     environment:
+      RAILS_ENV: test
       DATABASE_URL: postgresql://postgres:password@db:5432/store_test
       REDIS_URL: redis://redis:6379/0
 
