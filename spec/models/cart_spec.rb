@@ -16,6 +16,14 @@
 require 'rails_helper'
 
 RSpec.describe Cart, type: :model do
+  context 'when validating' do
+    it 'validates numericality of total_price' do
+      cart = described_class.new(total_price: -1)
+      expect(cart.valid?).to be_falsey
+      expect(cart.errors[:total_price]).to include("must be greater than or equal to 0")
+    end
+  end
+
   describe '#mark_as_abandoned!' do
     let(:cart) { create(:cart, abandoned: false) }
 
@@ -26,27 +34,35 @@ RSpec.describe Cart, type: :model do
     end
   end
 
-  describe '#active?' do
-    it 'returns true when not abandoned' do
-      cart = build(:cart, abandoned: false)
-      expect(cart.active?).to be true
+  describe "#active?" do
+    context "when not abandoned" do
+      it "returns true" do
+        cart = build(:cart, abandoned: false)
+        expect(cart.active?).to be true
+      end
     end
 
-    it 'returns false when abandoned' do
-      cart = build(:cart, abandoned: true)
-      expect(cart.active?).to be false
+    context "when abandoned" do
+      it "returns false" do
+        cart = build(:cart, abandoned: true)
+        expect(cart.active?).to be false
+      end
     end
   end
 
-  describe '#recently_active?' do
-    it 'returns true when updated within 3 hours' do
-      cart = build(:cart, updated_at: 2.hours.ago)
-      expect(cart.recently_active?).to be true
+  describe "#recently_active?" do
+    context "when updated within 3 hours" do
+      it "returns true" do
+        cart = build(:cart, updated_at: 2.hours.ago)
+        expect(cart.recently_active?).to be true
+      end
     end
 
-    it 'returns false when updated more than 3 hours ago' do
-      cart = build(:cart, updated_at: 4.hours.ago)
-      expect(cart.recently_active?).to be false
+    context "when updated more than 3 hours ago" do
+      it "returns false" do
+        cart = build(:cart, updated_at: 4.hours.ago)
+        expect(cart.recently_active?).to be false
+      end
     end
   end
 end

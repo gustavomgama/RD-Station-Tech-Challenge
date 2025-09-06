@@ -1,21 +1,29 @@
 require "rails_helper"
 
 RSpec.describe CartsController, type: :routing do
-  describe 'routes' do
-    it 'routes to #show' do
-      expect(get: '/cart').to route_to('carts#show')
+  describe "routing" do
+    describe "GET /cart" do
+      it "routes to #show" do
+        expect(get: "/cart").to route_to("carts#show")
+      end
     end
 
-    it 'routes to #create' do
-      expect(post: '/cart').to route_to('carts#create')
+    describe "POST /cart" do
+      it "routes to #create" do
+        expect(post: "/cart").to route_to("carts#create")
+      end
     end
 
-    it 'routes to #add_item via POST' do
-      expect(post: '/cart/add_item').to route_to('carts#update')
+    describe "POST /cart/add_item" do
+      it "routes to #update" do
+        expect(post: "/cart/add_item").to route_to("carts#update")
+      end
     end
 
-    it 'routes to #remove_item via DELETE' do
-      expect(delete: '/cart/1').to route_to('carts#destroy', product_id: '1')
+    describe "DELETE /cart/:product_id" do
+      it "routes to #destroy" do
+        expect(delete: "/cart/1").to route_to("carts#destroy", product_id: "1")
+      end
     end
   end
 end

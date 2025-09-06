@@ -25,11 +25,6 @@ class CartItem < ApplicationRecord
 
   validates_numericality_of :quantity, greater_than_or_equal_to: 0
 
-  validates :product_id, uniqueness: {
-    scope: :cart_id,
-    message: "already exists in this cart"
-  }
-
   after_save :update_cart_total
   after_destroy :update_cart_total
   after_commit :touch_cart
